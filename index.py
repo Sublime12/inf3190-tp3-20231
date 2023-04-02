@@ -37,4 +37,5 @@ def close_connection(exception):
 @app.route('/')
 def form():
     # À remplacer par le contenu de votre choix.
-    return render_template('form.html')
+    
+    return render_template("form.html")
