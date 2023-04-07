@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ animal["nom"] }}</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+    <div class="flex justify-center px-5">
+        <div class="max-w-6xl w-full space-y-4 pt-20">
+            <div>
+                Name : {{ animal["nom"] }}
+            </div>
+            <div>
+                Espece : {{ animal["espece"] }}
+            </div>
+            <div>
+                Race : {{ animal["race"] }}
+            </div>
+            <div>
+                Age : {{ animal["age"] }}
+            </div>
+            <div>
+                Courriel : <a href="mailto:{{ animal["courriel"] }}">Contacter {{ animal["courriel"] }}</a>
+            </div>
+            <div>
+                Adresse : {{ animal["adresse"] }}, {{ animal["ville"] }}, {{ animal["cp"] }}
+            </div>
+
+            <div>
+                Description : {{ animal["description"] }}
+            </div>
+
+            <div>
+                <a 
+                    class="py-2 px-3 border-sky-700 border bg-sky-700 text-gray-50 hover:bg-gray-50 hover:text-sky-700 ease-in duration-100 transition"
+                    href="{{ url_for('edit', id=animal['id']) }}">Modifier</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

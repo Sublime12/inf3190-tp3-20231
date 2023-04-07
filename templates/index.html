@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css">
+    <title>Tous les animaux</title>
+</head>
+<body>
+    <!-- Begin header -->
+    <div>
+        <nav>Header</nav>
+    </div>
+    <!-- End header -->
+
+    <!-- Begin main section -->
+    <main class="flex justify-center">
+        <div class="max-w-6xl w-full">
+            <h1 class="text-xl pb-20">Tous les animaux</h1>
+
+            <table class="w-full">
+                <thead>
+                    <tr class="uppercase">
+                        <th class="font-medium text-lg border-b py-4">Nom</th>
+                        <th class="font-medium text-lg border-b py-4">Espece</th>
+                        <th class="font-medium text-lg border-b py-4">Race</th>
+                        <th class="font-medium text-lg border-b py-4">Age</th>
+                        <th class="font-medium text-lg border-b py-4">Adresse Courriel Proprio</th>
+                        <th class="font-medium text-lg border-b py-4">Ou recuperer?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(nb_animals) %}
+                    {% set animal = animals[i] %}
+                    <tr class="border-b">
+                        <td class="pt-5 pb-2">
+                            <a 
+                                class="hover:underline hover:decoration-orange-500"
+                                href="{{ url_for('show', id=animal['id']) }}"
+                            >{{ i + 1 }}) {{ animal["nom"] }}</a>
+                        </td>
+                        <td class="pt-5 pb-2">{{ animal["espece"] }}</td>
+                        <td class="pt-5 pb-2">{{ animal["race"] }}</td>
+                        <td class="pt-5 pb-2">{{ animal["age"] }}</td>
+                        <td class="pt-5 pb-2">{{ animal["courriel"] }}</td>
+                        <td class="pt-5 pb-2">{{ animal["adresse"] }}, {{ animal["ville"] }}, {{ animal["cp"] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <!-- End section -->
+</body>
+</html>
