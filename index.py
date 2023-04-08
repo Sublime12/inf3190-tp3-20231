@@ -95,7 +95,8 @@ def store():
     validatorHandler.add('ville', ville, [Required(), ShouldNotContainsComma()])
 
     errors = validatorHandler.validate()
-    return errors
+    if (len(errors) != 0):
+        return render_template('create.html', errors=errors, has_errors=True), 400
 
     data = {
         'nom': nom,

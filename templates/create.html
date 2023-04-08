@@ -1,9 +1,31 @@
-
 {% macro error_component(name) %}
-    <div class="text-sm text-red-600 hidden">
-        Le champ {{ name }} entre est incorrect
+    {% if errors[name] and errors[name]['is_valid'] != 0 %}
+        {% set messages = errors[name]['messages'] %}
+        <div class="server-error-validation-{{ name }}">
+        {% for message in messages %}
+            <div class="text-sm text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro input_component(name, label) %}
+    <div class="flex flex-col" x-data="{ {{ name }}: `{{ errors[name]['value'] if errors and errors[name] else '' }}`}">
+        <label for="{{ name }}">{{ label }}</label>
+        <input 
+            x-model="{{ name }}" 
+            id="{{ name }}" 
+            name="{{ name }}" 
+            type="text"
+        >
+        {% if errors %}
+            {{ error_component(name) }}
+        {% endif %}
     </div>
 {% endmacro %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,64 +42,16 @@
                 action="{{ url_for('store') }}" 
                 method="post"
                 class="space-y-5"
-                x-data="{
-                    nom: '',
-                    espece: '',
-                    race: '',
-                    age: '',
-                    description: '',
-                    courriel: '',
-                    adresse: '',
-                    cp: '',
-                    ville: ''
-                }"
             >
-                <div class="flex flex-col">
-                    <label for="nom">Nom</label>
-                    <input x-model="nom" id="nom" name="nom" type="text">
-                    {{ error_component('nom') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="espece">Espece</label>
-                    <input x-model="espece" id="espece" name="espece" type="text">
-                    {{ error_component('espece') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="race">Race</label>
-                    <input x-model="race" id="race" name="race" type="text">
-                    {{ error_component('race') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="age">Age</label>
-                    <input x-model="age" id="age" name="age" type="text">
-                    {{ error_component('age') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="description">Description</label>
-                    <!-- <input id="description" name="description" type="text"> -->
-                    <textarea x-model="description" name="description" id="description"></textarea>
-                    {{ error_component('description') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="courriel">Courriel</label>
-                    <input x-model="courriel" id="courriel" name="courriel" type="text">
-                    {{ error_component('courriel') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="adresse">Adresse</label>
-                    <input x-model="adresse" id="adresse" name="adresse" type="text">
-                    {{ error_component('adresse') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="ville">Ville</label>
-                    <input x-model="ville" id="ville" name="ville" type="text">
-                    {{ error_component('ville') }}
-                </div>
-                <div class="flex flex-col">
-                    <label for="cp">Code postal</label>
-                    <input x-model="cp" id="cp" name="cp" type="text">
-                    {{ error_component('Code postal') }}
-                </div>
+                {{ input_component('nom', 'Nom') }}
+                {{ input_component('espece', 'Espece') }}
+                {{ input_component('race', 'Race') }}
+                {{ input_component('age', 'Age') }}
+                {{ input_component('description', 'Description') }}
+                {{ input_component('courriel', 'Courriel') }}
+                {{ input_component('adresse', 'Adresse') }}
+                {{ input_component('ville', 'Ville') }}
+                {{ input_component('cp', 'Code postal') }}
 
                 <div>
                     <button 
@@ -89,6 +63,9 @@
             </form>
         </div>
     </div>
+    <script>
+        
+    </script>
     <script src="/js/app.js"></script>
 </body>
 </html>

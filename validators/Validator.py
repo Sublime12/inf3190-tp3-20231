@@ -24,15 +24,16 @@ class ValidatorHandler:
             value = el['value']
             validators = el['validators']
             error = {
-                # 'name': name,
+                'is_valid': False,
                 'value': value,
                 'messages': [],
             }
 
             for validator in validators:
                 error_result = validator.handle(name, value)
-                if not error_result['is_valid'] :
-                    error['messages'].append(error_result['message'])
+                # if not error_result['is_valid'] :
+                error['is_valid'] = error_result['is_valid']
+                error['messages'].append(error_result['message'])
             
             if len(error['messages']) != 0:
                 errors[name] = error
@@ -128,6 +129,19 @@ class ShouldBeEmail:
             'message': '',
         }
     
-class AdressShouldBeValidCanadianFormat:
-    def __init__(self) -> None:
-        self._regex = '^$'
+class ShouldRespectRegex:
+    def __init__(self, regex: str) -> None:
+        self._regex = regex
+
+    def handle(self, name: str, value: str):
+        if (not re.match(self._regex, value)):
+            
+            return {
+                'is_valid': False,
+                'message':  'L\'atribut ' + name + ' n\'est pas une adresse mail valide'
+            }
+        
+        return {
+            'is_valid': True,
+            'message': '',
+        }

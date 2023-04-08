@@ -642,9 +642,6 @@ select {
 .table {
   display: table;
 }
-.hidden {
-  display: none;
-}
 .w-full {
   width: 100%;
 }
